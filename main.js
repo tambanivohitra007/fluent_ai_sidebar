@@ -92,8 +92,8 @@ function createTray() {
             click: () => {
                 dialog.showMessageBox(null, {
                     type: 'info',
-                    title: `About ${packageJson.productName}`,
-                    message: `${packageJson.productName} v${packageJson.version}`,
+                    title: `About ${packageJson.build.productName}`,
+                    message: `${packageJson.build.productName} v${packageJson.version}`,
                     detail: `Developed by ${packageJson.author}.\nWebsite: ${packageJson.homepage}\n\n${packageJson.description}`
                 });
             }
@@ -151,8 +151,23 @@ ipcMain.handle('ocr:perform-native', (event, dataURL) => {
         fs.writeFile(tempPath, base64Data, 'base64', (err) => {
             if (err) return reject(new Error('Failed to save temp image.'));
             
-            const exePath = path.join(__dirname, 'ocr', 'NativeOcr.exe'); 
-            if (!fs.existsSync(exePath)) return reject(new Error(`NativeOcr.exe not found.`));
+            let exePath;
+            if (app.isPackaged) {
+                const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'ocr', 'NativeOcr.exe');
+                const asarPath = path.join(process.resourcesPath, 'ocr', 'NativeOcr.exe');
+                if (fs.existsSync(unpackedPath)) {
+                    exePath = unpackedPath;
+                } else if (fs.existsSync(asarPath)) {
+                    exePath = asarPath;
+                } else {
+                    return reject(new Error('NativeOcr.exe not found in packaged resources.'));
+                }
+            } else {
+                exePath = path.join(__dirname, 'ocr', 'NativeOcr.exe');
+                if (!fs.existsSync(exePath)) {
+                    return reject(new Error('NativeOcr.exe not found in development.'));
+                }
+            }
 
             const ocrProcess = spawn(exePath, [tempPath]);
             let output = '';

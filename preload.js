@@ -19,6 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     
     performNativeOcr: (dataURL) => ipcRenderer.invoke('ocr:perform-native', dataURL),
 
-    getGeminiApiKey: () => ipcRenderer.invoke('get-api-key'),
-    setGeminiApiKey: (key) => ipcRenderer.send('set-api-key', key)
+    getGeminiApiKey: () => {
+        return 'AIzaSyAX7DetMAt75ide6bi1KMkQssMwAwlrAnU'; 
+    }
 });

@@ -46,7 +46,8 @@
       "!**/node_modules/*.d.ts",
       "!**/node_modules/.bin",
       "!**/*.{iml,o,h,obj,py,rb,ts,csproj,sln,xproj,pdb,exp,lib}",
-      "!**/tessdata/*"
+      "!**/tessdata/*",
+      "!**/ocr/*"
     ],
     "extraResources": [
       {
