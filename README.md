@@ -1,6 +1,6 @@
 # Fluent AI Sidebar
 
-![Fluent AI Sidebar in action](homepage/capture1.png)
+![Fluent AI Sidebar in action](assets/icon.png)
 
 A cross-platform AI Sidebar Agent with OCR capabilities, designed to boost your productivity. Capture any text on your screen, and let AI translate, explain, rephrase, or even reply for you.
 
