@@ -1,0 +1,194 @@
+<!-- capture.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Capture Screen</title>
+    <style>
+        html, body {
+            margin: 0; padding: 0; width: 100%;
+            height: 100%; overflow: hidden;
+            cursor: crosshair;
+            /* The window itself is transparent, the canvas will provide the dimming */
+            background-color: transparent; 
+        }
+        canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+        }
+        #info-box {
+            position: absolute; background-color: rgba(0,0,0,0.8);
+            color: white; padding: 8px 12px; border-radius: 6px;
+            font-family: sans-serif; font-size: 14px; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="info-box">Drag to select an area. Press Esc to cancel.</div>
+    <canvas id="capture-canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('capture-canvas');
+        const ctx = canvas.getContext('2d');
+        const infoBox = document.getElementById('info-box');
+
+        const pixelRatio = window.devicePixelRatio || 1;
+        let isDragging = false;
+        let startX, startY, currentX, currentY;
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth * pixelRatio;
+            canvas.height = window.innerHeight * pixelRatio;
+        }
+
+        // Set initial info box position
+        infoBox.style.left = `${(window.innerWidth / 2) - 100}px`;
+        infoBox.style.top = '20px';
+
+        // Redraw the overlay when the window is shown
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                setCanvasSize();
+                drawOverlay();
+            }
+        });
+
+        // The initial drawing of the dim overlay
+        function drawOverlay() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // // The drawing loop while selecting
+        // function drawSelection() {
+        //     // No need to clear if we redraw the overlay each time
+        //     drawOverlay();
+
+        //     const rectX = Math.min(startX, currentX);
+        //     const rectY = Math.min(startY, currentY);
+        //     const rectWidth = Math.abs(currentX - startX);
+        //     const rectHeight = Math.abs(currentY - startY);
+
+        //     // "Punch a hole" in the overlay by clearing the selected rectangle
+        //     if (rectWidth > 0 && rectHeight > 0) {
+        //         ctx.clearRect(rectX, rectY, rectWidth, rectHeight);
+        //     }
+
+        //     // Draw a white border
+        //     ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        //     ctx.lineWidth = 2 * pixelRatio;
+        //     ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
+        // }
+
+        // --- FIX: Rewritten drawing logic ---
+        function drawSelection() {
+            // Clear the previous frame to prevent trails
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const rectX = Math.min(startX, currentX);
+            const rectY = Math.min(startY, currentY);
+            const rectWidth = Math.abs(currentX - startX);
+            const rectHeight = Math.abs(currentY - startY);
+
+            // Set the dimming color
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+
+            // Draw 4 rectangles around the selection, leaving the middle clear
+            // 1. Top rectangle
+            ctx.fillRect(0, 0, canvas.width, rectY);
+            // 2. Bottom rectangle
+            ctx.fillRect(0, rectY + rectHeight, canvas.width, canvas.height - (rectY + rectHeight));
+            // 3. Left rectangle
+            ctx.fillRect(0, rectY, rectX, rectHeight);
+            // 4. Right rectangle
+            ctx.fillRect(rectX + rectWidth, rectY, canvas.width - (rectX + rectWidth), rectHeight);
+            
+            // Draw the white border for the selection
+            if (rectWidth > 0 && rectHeight > 0) {
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.lineWidth = 2 * pixelRatio;
+                ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
+            }
+        }
+
+        // Listen for the signal to take the actual screenshot
+        window.electronAPI.on('capture:take-snip', async () => {
+            try {
+                const sourceId = await window.electronAPI.getScreenSource();
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: { mandatory: { chromeMediaSource: 'desktop', chromeMediaSourceId: sourceId } }
+                });
+
+                const videoEl = document.createElement('video');
+                videoEl.onloadedmetadata = () => {
+                    videoEl.play();
+                    
+                    const x = Math.min(startX, currentX);
+                    const y = Math.min(startY, currentY);
+                    const width = Math.abs(currentX - startX);
+                    const height = Math.abs(currentY - startY);
+
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = width;
+                    tempCanvas.height = height;
+                    const tempCtx = tempCanvas.getContext('2d');
+                    
+                    // Draw the selected part of the full video frame to the temp canvas
+                    tempCtx.drawImage(videoEl, x, y, width, height, 0, 0, width, height);
+
+                    // Stop the video stream immediately
+                    stream.getTracks().forEach(track => track.stop());
+
+                    window.electronAPI.captureComplete({ dataURL: tempCanvas.toDataURL('image/png') });
+                };
+                videoEl.srcObject = stream;
+            } catch (e) {
+                console.error("Screenshot failed:", e);
+                window.electronAPI.captureCancel();
+            }
+        });
+
+        window.onmousedown = (e) => {
+            isDragging = true;
+            startX = e.clientX * pixelRatio;
+            startY = e.clientY * pixelRatio;
+            currentX = startX;
+            currentY = startY;
+            infoBox.style.display = 'none';
+        };
+
+        window.onmousemove = (e) => {
+            if (isDragging) {
+                currentX = e.clientX * pixelRatio;
+                currentY = e.clientY * pixelRatio;
+                requestAnimationFrame(drawSelection);
+_x000D_
+            }
+        };
+
+        window.onmouseup = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const width = Math.abs(e.clientX * pixelRatio - startX);
+            const height = Math.abs(e.clientY * pixelRatio - startY);
+
+            if (width > 10 && height > 10) {
+                // Tell the main process to hide this window so we can take a clean screenshot
+                window.electronAPI.send('capture:hide-for-snip');
+            } else {
+                window.electronAPI.captureCancel();
+            }
+        };
+
+        window.onkeydown = (e) => {
+            if (e.key === 'Escape') {
+                window.electronAPI.captureCancel();
+            }
+        };
+        
+        // Initial setup
+        setCanvasSize();
+    </script>
+</body>
+</html>

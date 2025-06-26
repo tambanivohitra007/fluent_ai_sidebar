@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <title>Fluent AI Sidebar - Mr.Rindra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* --- COLOR PALETTE FROM LOGO --- */
+        :root {
+            --brand-purple: #8B5CF6; /* #8B5CF6 is a close match to the logo's purple */
+            --brand-purple-light: #A78BFA;
+            --brand-blue: #22D3EE;
+            --brand-orange: #F59E0B;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--brand-blue), var(--brand-orange));
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #A78BFA, #22D3EE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .feature-card {
+            background-color: #1F2937; /* bg-gray-800 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .glow-effect {
+            box-shadow: 0 0 30px var(--brand-purple);
+            background-color: var(--brand-purple);
+        }
+        .btn-purple {
+             background-color: var(--brand-purple);
+        }
+        .btn-purple:hover {
+            background-color: #7C3AED; /* A slightly darker purple for hover */
+        }
+        .lucide {
+            width: 48px;
+            height: 48px;
+            stroke-width: 1.5;
+            color: var(--brand-purple-light);
+        }
+        .screenshot {
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .screenshot:hover {
+            transform: scale(1.03);
+        }
+        .hero-showcase {
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        .spotlight-img {
+            max-height: 500px;
+            object-fit: contain;
+            object-position: top;
+            margin: 0 auto;
+        }
+        .gallery-img {
+            height: 384px; /* h-96 */
+            object-fit: cover;
+            object-position: top;
+        }
+        .testimonial-card {
+            background-color: #1F2937;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .faq details {
+            background-color: #1F2937;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .faq summary {
+            padding: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+        .faq summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq div {
+            padding: 0 1rem 1rem;
+            color: #D1D5DB; /* text-gray-300 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Header -->
+    <header class="absolute top-0 left-0 right-0 z-10 p-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="images/icon.png" alt="Fluent AI Sidebar Logo" class="h-10 w-10 rounded-lg">
+                <h1 class="text-2xl font-bold">Fluent AI Sidebar</h1>
+            </div>
+            <a href="#download" class="btn-purple text-white font-semibold px-6 py-2 rounded-lg shadow-lg transition duration-300">Download</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12">
+        <div class="absolute inset-0 gradient-bg opacity-10"></div>
+        <div class="relative z-10 text-center px-4">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-4"><span class="text-gradient">The Smartest Way to Interact With Your Screen</span></h2>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                Instantly capture any text on your screen, and let AI translate, explain, rephrase, or even reply for you. Your ultimate productivity companion, seamlessly integrated into your desktop.
+            </p>
+            <a href="#download" class="btn-purple text-white font-bold text-xl px-10 py-4 rounded-lg shadow-2xl transition duration-300 transform hover:scale-105 inline-block">
+                Download for Free
+            </a>
+            <div class="hero-showcase">
+                <img src="images/main.png" alt="Fluent AI Sidebar in action" class="w-full">
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Features Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold">Powerful Features, Simple Interface</h3>
+                <p class="text-gray-400 mt-2">Everything you need, just a keypress away.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card p-8 rounded-2xl text-center">
+                    <i data-lucide="scan-line" class="lucide mx-auto mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Instant OCR Capture</h4>
+                    <p class="text-gray-400">Press F8 to select any region. Our engine extracts text in a flash.</p>
+                </div>
+                <div class="feature-card p-8 rounded-2xl text-center">
+                     <i data-lucide="sparkles" class="lucide mx-auto mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">AI-Powered Actions</h4>
+                    <p class="text-gray-400">Translate, explain, rephrase, or get answers from your captured text.</p>
+                </div>
+                <div class="feature-card p-8 rounded-2xl text-center">
+                     <i data-lucide="layers" class="lucide mx-auto mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Seamless Fluent Design</h4>
+                    <p class="text-gray-400">A beautiful sidebar that docks to your screen and feels like a native part of your OS.</p>
+                </div>
+                <div class="feature-card p-8 rounded-2xl text-center">
+                    <i data-lucide="laptop" class="lucide mx-auto mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Cross-Platform</h4>
+                    <p class="text-gray-400">Works flawlessly on Windows, macOS, and Linux with native OCR support.</p>
+                </div>
+                <div class="feature-card p-8 rounded-2xl text-center">
+                    <i data-lucide="clipboard-check" class="lucide mx-auto mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Clipboard Watcher</h4>
+                    <p class="text-gray-400">Automatically process text you copy, making your workflow even faster.</p>
+                </div>
+                <div class="feature-card p-8 rounded-2xl text-center">
+                    <i data-lucide="history" class="lucide mx-auto mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Built-in History</h4>
+                    <p class="text-gray-400">Your captures and AI responses are saved locally for easy access.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Spotlight Section -->
+    <section class="py-20 bg-gray-800/50">
+        <div class="container mx-auto px-6 space-y-24">
+            <div class="text-center mb-16">
+                 <h3 class="text-4xl font-bold">How It Works</h3>
+                 <p class="text-gray-400 mt-2">A workflow designed for speed and simplicity.</p>
+            </div>
+            
+            <!-- Spotlight 1: Capture -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h4 class="text-3xl font-bold mb-4">1. Capture Anything, Instantly.</h4>
+                    <p class="text-gray-300 mb-4">
+                        Press a hotkey and your screen dims, ready for selection. The "live" capture feels just like your operating system's native snipping tool. Drag a box over anything—a code snippet, a foreign language comment, a non-selectable error message—and the sidebar instantly appears with your capture.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i data-lucide="check-circle" class="h-5 w-5 mr-2" style="color: var(--brand-purple-light);"></i>Feels native and responsive, no lag.</li>
+                        <li class="flex items-center"><i data-lucide="check-circle" class="h-5 w-5 mr-2" style="color: var(--brand-purple-light);"></i>Select text even from images or videos.</li>
+                        <li class="flex items-center"><i data-lucide="check-circle" class="h-5 w-5 mr-2" style="color: var(--brand-purple-light);"></i>Uses blazing-fast native Windows OCR.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="images/capture1.png" alt="Live screen capture in action" class="screenshot spotlight-img">
+                </div>
+            </div>
+
+            <!-- Spotlight 2: Extract & Act -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                 <div class="lg:order-2">
+                    <h4 class="text-3xl font-bold mb-4">2. Extract Text & Unleash AI.</h4>
+                    <p class="text-gray-300 mb-4">
+                        Click "Extract Text" and watch the image turn into selectable text in seconds. From there, the AI is at your command. Need to understand a piece of code? Click "Explain". Replying to a message? Click "Reply". The AI understands the context and gives you exactly what you need.
+                    </p>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i data-lucide="check-circle" class="h-5 w-5 mr-2" style="color: var(--brand-purple-light);"></i>One-click text extraction from any image.</li>
+                        <li class="flex items-center"><i data-lucide="check-circle" class="h-5 w-5 mr-2" style="color: var(--brand-purple-light);"></i>Multiple AI actions: Explain, Translate, Reply, Rephrase, and Answer.</li>
+                        <li class="flex items-center"><i data-lucide="check-circle" class="h-5 w-5 mr-2" style="color: var(--brand-purple-light);"></i>Seamlessly copy the AI's response or the extracted text.</li>
+                    </ul>
+                </div>
+                <div class="lg:order-1">
+                    <img src="images/capture2.png" alt="Sidebar with extracted text and AI actions" class="screenshot spotlight-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold">Gallery</h3>
+                <p class="text-gray-400 mt-2">A closer look at the features.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <img src="images/capture3.png" alt="AI Explanation feature" class="screenshot gallery-img">
+                <img src="images/capture4.png" alt="AI Translation feature" class="screenshot gallery-img">
+                <img src="images/capture5.png" alt="History panel with previous queries" class="screenshot gallery-img">
+                <img src="images/capture6.png" alt="Application settings menu" class="screenshot gallery-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold">Frequently Asked Questions</h3>
+            </div>
+            <div class="faq">
+                <details>
+                    <summary>Is Fluent AI Sidebar free?</summary>
+                    <div>
+                        <p>Yes, the app is completely free to use. You just need to provide your own Google Gemini API key, which also has a generous free tier.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What platforms are supported?</summary>
+                    <div>
+                        <p>Currently, the app is officially supported on Windows. macOS and Linux versions are planned. You can contact the author to express interest and get notified when they are available.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Is my data safe?</summary>
+                    <div>
+                        <p>Absolutely. Your API key and history are stored locally on your machine. Your captured text is sent directly to the Google Gemini API and is not stored on any third-party servers.</p>
+                    </div>
+                </details>
+                 <details>
+                    <summary>How does the OCR work?</summary>
+                    <div>
+                        <p>On Windows, we use the powerful and fast native Windows OCR engine. On macOS and Linux, the app uses Tesseract.js, a popular open-source OCR library that runs locally.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-20">
+        <div class="container mx-auto text-center">
+             <h3 class="text-4xl font-bold mb-8">Get Started Now</h3>
+             <div class="flex justify-center flex-wrap gap-4">
+                 <a href="setup.exe" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 flex items-center space-x-2">
+                    <i data-lucide="target"></i>
+                    <span>Windows</span>
+                </a>
+                 <a href="mailto:your-email@example.com?subject=Request for Fluent AI Sidebar on macOS" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 flex items-center space-x-2">
+                    <i data-lucide="apple"></i>
+                    <span>macOS</span>
+                </a>
+                 <a href="mailto:your-email@example.com?subject=Request for Fluent AI Sidebar on Linux" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-lg transition duration-300 flex items-center space-x-2">
+                    <i data-lucide="unplug"></i> <!-- A generic icon for Linux -->
+                    <span>Linux</span>
+                </a>
+             </div>
+             <p class="text-gray-400 mt-6">
+                The Windows version is available now. For macOS and Linux, please click the buttons above to contact the author and register your interest.
+             </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-800 text-center text-gray-400">
+        <div class="container mx-auto">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://github.com/tambanivohitra007" class="hover:text-white"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/rindrarazafinjatovo" class="hover:text-white"><i data-lucide="linkedin"></i></a>
+                <a href="https://www.facebook.com/rindra.it" class="hover:text-white"><i data-lucide="facebook"></i></a>
+            </div>
+            <p>&copy; 2025 Mr. Rindra. All Rights Reserved.</p>
+            <p class="text-sm mt-1">Created by Rindra Razafinjatovo</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center p-4 transition-opacity duration-300">
+        <span id="close-modal" class="absolute top-4 right-6 text-white text-5xl font-light cursor-pointer hover:text-gray-300">&times;</span>
+        <img id="modal-image" src="" alt="Full-size view" class="max-w-[90vw] max-h-[90vh] object-contain">
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            document.querySelectorAll('.screenshot').forEach(img => {
+                img.addEventListener('click', () => {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    modalImg.src = img.src;
+                });
+            });
+
+            const hideModal = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            };
+
+            closeModalBtn.addEventListener('click', hideModal);
+
+            modal.addEventListener('click', (e) => {
+                // Close modal if the background is clicked
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    hideModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

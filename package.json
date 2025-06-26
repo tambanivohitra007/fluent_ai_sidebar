@@ -1,0 +1,80 @@
+{
+  "name": "fluent-ai-sidebar",
+  "version": "1.0.0",
+  "description": "A cross-platform AI Sidebar Agent with OCR capabilities.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder"
+  },
+  "keywords": [
+    "Electron",
+    "AI",
+    "OCR",
+    "Fluent",
+    "Sidebar",
+    "Gemini"
+  ],
+  "author": "Rindra Razafinjatovo",
+  "license": "MIT",
+  "homepage": "https://fluentai.rindra.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tambanivohitra007/fluent-ai-sidebar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tambanivohitra007/fluent-ai-sidebar/issues"
+  },
+  "devDependencies": {
+    "electron": "^28.2.3",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "tesseract.js": "^5.0.5"
+  },
+  "build": {
+    "appId": "com.yourcompany.fluentaisidebar",
+    "productName": "Fluent AI Sidebar",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,h,obj,py,rb,ts,csproj,sln,xproj,pdb,exp,lib}",
+      "!**/tessdata/*"
+    ],
+    "extraResources": [
+      {
+        "from": "./tessdata/",
+        "to": "tessdata"
+      },
+      {
+        "from": "./ocr/",
+        "to": "ocr"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

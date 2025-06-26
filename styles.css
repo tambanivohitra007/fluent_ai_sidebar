@@ -1,0 +1,303 @@
+/* styles.css */
+:root {
+    --font-family: 'Inter', sans-serif;
+    --app-bg-light: rgba(243, 243, 243, 0.75);
+    --app-bg-dark: rgba(30, 30, 30, 0.75);
+    --panel-bg-light: rgba(255, 255, 255, 0.6);
+    --panel-bg-dark: rgba(50, 50, 50, 0.6);
+    --text-color-light: #1e1e1e;
+    --text-color-dark: #f0f0f0;
+    --border-color-light: rgba(0, 0, 0, 0.1);
+    --border-color-dark: rgba(255, 255, 255, 0.15);
+    --accent-color: #0078d4;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --app-bg: var(--app-bg-dark);
+        --panel-bg: var(--panel-bg-dark);
+        --text-color: var(--text-color-dark);
+        --border-color: var(--border-color-dark);
+        --shadow: var(--shadow-dark);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --app-bg: var(--app-bg-light);
+        --panel-bg: var(--panel-bg-light);
+        --text-color: var(--text-color-light);
+        --border-color: var(--border-color-light);
+        --shadow: var(--shadow-light);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: transparent; /* Essential for the acrylic effect */
+}
+
+#app-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--app-bg);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+}
+
+#drag-region {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    -webkit-app-region: drag;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    -webkit-app-region: no-drag; /* Buttons should be clickable */
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.header-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 300;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.header-btn:hover {
+    opacity: 1;
+}
+
+#main-content {
+    flex-grow: 1;
+    padding: 0 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+/* Scrollbar styling */
+#main-content::-webkit-scrollbar {
+    width: 6px;
+}
+#main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+#main-content::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.4);
+    border-radius: 3px;
+}
+#main-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(128, 128, 128, 0.6);
+}
+
+.panel {
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 12px;
+}
+
+/* --- STYLES FOR NEW WORKFLOW --- */
+#capture-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+#captured-image-preview {
+    max-width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+.primary-action {
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: 600;
+    width: 100%;
+}
+.primary-action:hover {
+    opacity: 0.9;
+    background-color: var(--accent-color); /* Maintain bg on hover */
+}
+/* --- END STYLES FOR NEW WORKFLOW --- */
+
+
+#input-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    resize: vertical;
+    font-size: 14px;
+}
+textarea:focus {
+    outline: 2px solid var(--accent-color);
+    border-color: transparent;
+}
+
+#action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.action-btn:active {
+    transform: scale(0.98);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.action-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+#output-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#status-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 8px;
+}
+
+#status-text {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+#output-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.placeholder {
+    opacity: 0.6;
+}
+
+/* History */
+#toggle-history-btn {
+    width: 100%;
+    padding: 8px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+#history-panel {
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    margin-top: 8px;
+}
+#history-list {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.history-item {
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 12px;
+    cursor: pointer;
+    word-break: break-all;
+}
+.history-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Loader animation */
+#loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-color);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
